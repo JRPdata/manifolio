@@ -110,6 +110,13 @@ yarn install
 yarn dev
 ```
 
+```
+You need to set the supabase instance id, and the supabase API key (the following is the public key):
+```
+NEXT_PUBLIC_SUPABASE_INSTANCE_ID="pxidrgkatumlvfqaxcll"
+NEXT_PUBLIC_SUPABASE_API_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4aWRyZ2thdHVtbHZmcWF4Y2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5OTUzOTgsImV4cCI6MTk4NDU3MTM5OH0.d_yYtASLzAoIIGdXUBIgRAGLBnNow7JG2SoaNMQ8ySg"
+```
+
 There are just two environment variables you might want to set (in a `.env` file or otherwise):
 ```
 NEXT_PUBLIC_LOG_LEVEL=debug # "debug" | "info" | "warn" | "error", not yet used very consistently
@@ -122,7 +129,12 @@ $ node -v
 v19.8.1
 $ yarn -v
 1.22.19
-``` -->
+```
+Package requirements:
+node is here: https://nodejs.org/en/download/package-manager
+yarn is here: https://classic.yarnpkg.com/en/docs/install
+-->
+
 
 ## Acknowledgements
 
