@@ -123,6 +123,13 @@ const MarketSection: React.FC<MarketSectionProps> = ({
   const [market, setMarket] = useState<FullMarket | undefined>(undefined);
   const [foundMarket, setFoundMarket] = useState<boolean>(false);
 
+  if (typeof uniqueBettorCountString == 'undefined') {
+    var uniqueBettorCountString = "";
+  }
+  if (marketModel) {
+    var uniqueBettorCountString = String(marketModel.uniqueBettorCount);
+  }
+
   const errorCheck = useCallback((market: FullMarket): boolean => {
     let error = false;
     if (market.closeTime === undefined || market.closeTime < Date.now()) {
@@ -246,6 +253,11 @@ const MarketSection: React.FC<MarketSectionProps> = ({
                 ? "—"
                 : `${(probability * 100).toFixed(1)}%`
             }
+            classes={classes}
+          />
+          <Detail
+            label="# traders"
+            value={uniqueBettorCountString}
             classes={classes}
           />
           <Detail

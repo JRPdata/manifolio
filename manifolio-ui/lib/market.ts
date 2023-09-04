@@ -15,15 +15,18 @@ export class CpmmMarketModel {
   public bets: Bet[];
   public unfilledBets: Bet[];
   public balanceByUserId: Record<string, number>;
+  public uniqueBettorCount: number;
 
   constructor({
     market,
     bets,
     balanceByUserId,
+    uniqueBettorCount
   }: {
     market: FullMarket;
     bets: Bet[];
     balanceByUserId: Record<string, number>;
+    uniqueBettorCount: number;
   }) {
     this.market = market;
     this.bets = bets; // FIXME we don't all bets at all, just unfilled ones
@@ -31,6 +34,7 @@ export class CpmmMarketModel {
       (bet) => bet.isFilled === false && bet.isCancelled === false
     );
     this.balanceByUserId = balanceByUserId;
+    this.uniqueBettorCount = uniqueBettorCount;
   }
 
   getBetInfo = (
@@ -115,6 +119,14 @@ const buildCpmmMarketModelInnerSupabaseApi = async (
     .eq("is_redemption", false)
     .limit(1000);
 
+  const { data: contract } = await client
+    .from("contracts")
+    .select("*")
+    .eq("id", market.id)
+    .limit(1);
+
+  const uniqueBettorCount = contract[0].data.uniqueBettorCount;
+
   const flattenedBets = (limitBets ?? []).map((bet) => bet?.data) as LimitBet[];
   const nonExpiredBets = flattenedBets.filter(
     (bet) => !bet.expiresAt || bet.expiresAt > Date.now()
@@ -137,7 +149,6 @@ const buildCpmmMarketModelInnerSupabaseApi = async (
 
   // Fetch user data in chunks using executeChunkedQueue
   const users = await executeChunkedQueue(fetchUserData, userIds);
-
   const balanceByUserId = users.reduce((acc, user) => {
     try {
       if (user) {
@@ -148,8 +159,7 @@ const buildCpmmMarketModelInnerSupabaseApi = async (
     }
     return acc;
   }, {} as { [userId: string]: number });
-
-  return new CpmmMarketModel({ market, bets: nonExpiredBets, balanceByUserId });
+  return new CpmmMarketModel({ market, bets: nonExpiredBets, balanceByUserId, uniqueBettorCount: uniqueBettorCount });
 };
 
 export const buildCpmmMarketModel = async (
