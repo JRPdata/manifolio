@@ -110,7 +110,6 @@ yarn install
 yarn dev
 ```
 
-```
 You need to set the supabase instance id, and the supabase API key (the following is the public key):
 ```
 NEXT_PUBLIC_SUPABASE_INSTANCE_ID="pxidrgkatumlvfqaxcll"
