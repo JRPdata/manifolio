@@ -100,7 +100,7 @@ git clone https://github.com/Will-Howard/manifolio.git
 
 ![Manifolio Chrome extension screenshot](images/extension-screenshot.png)
 
-<!-- ## Local setup
+## Local setup
 
 You can run the site locally like so:
 ```bash
@@ -131,10 +131,9 @@ $ yarn -v
 1.22.19
 ```
 Package requirements:
+
 node is here: https://nodejs.org/en/download/package-manager
 yarn is here: https://classic.yarnpkg.com/en/docs/install
--->
-
 
 ## Acknowledgements
 
